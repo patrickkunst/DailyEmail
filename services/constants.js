@@ -5,6 +5,9 @@ const CONSTANTS = {
     FORECAST: "forecast.json",
     ASTRONOMY: "astronomy.json",
   },
+  HOLIDAY: {
+    BASE_URL: "https://calendarific.com/api/v2/holidays",
+  },
 };
 
 module.exports = CONSTANTS;
