@@ -7,8 +7,18 @@ const weatherKey = process.env.WEATHER_API_KEY;
 const zipcode = process.env.ZIPCODE;
 
 const controller = async () => {
-  const weatherRawData = await WeatherService.getForecast(zipcode, weatherKey);
-  console.log(weatherRawData.forecast);
+  let weatherRawData, astroRawData;
+  try {
+    weatherRawData = await WeatherService.getForecast(zipcode, weatherKey);
+  } catch (err) {
+    console.error("Error occurred while fetching weather data:", err.message);
+  }
+
+  try {
+    astroRawData = await WeatherService.getAstronomy(zipcode, weatherKey);
+  } catch (err) {
+    console.error("Error occurred while fetching astronomy data:", err.message);
+  }
 };
 
 module.exports = controller;
