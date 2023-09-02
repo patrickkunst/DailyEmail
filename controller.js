@@ -7,11 +7,8 @@ const weatherKey = process.env.WEATHER_API_KEY;
 const zipcode = process.env.ZIPCODE;
 
 const controller = async () => {
-  const curWeather = await WeatherService.getCurrentWeather(
-    zipcode,
-    weatherKey
-  );
-  console.log(curWeather);
+  const weatherRawData = await WeatherService.getForecast(zipcode, weatherKey);
+  console.log(weatherRawData.forecast);
 };
 
 module.exports = controller;
