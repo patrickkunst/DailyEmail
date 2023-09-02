@@ -7,8 +7,7 @@ class WeatherService {
       method: "get",
       url: `${WEATHER.BASE_URL}/${WEATHER.CURRENT}?key=${apiKey}&q=${zipcode}`,
     };
-    const data = await axios.request(options);
-    console.log(data);
+    const data = (await axios.request(options)).data;
     return data;
   }
 }
