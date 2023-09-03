@@ -1,11 +1,12 @@
 const axios = require("axios");
 const moment = require("moment");
 const { HOLIDAY } = require("./constants");
+const { HolidayHelper } = require("../helpers/helpers");
 
 class HolidayService {
   static async getHolidays(apiKey) {
-    const day = moment().day();
-    const month = moment().month();
+    const day = moment().date();
+    const month = moment().month() + 1;
     const year = moment().year();
     const options = {
       method: "get",
@@ -13,7 +14,7 @@ class HolidayService {
     };
 
     const data = (await axios.request(options)).data;
-    return data.response.holidays;
+    return await HolidayHelper.prepareHolidays(data.response.holidays);
   }
 }
 

@@ -1,6 +1,7 @@
 const axios = require("axios");
 const moment = require("moment");
 const { WEATHER } = require("./constants");
+const { WeatherHelper } = require("../helpers/helpers");
 
 class WeatherService {
   static async getForecast(zipcode, apiKey) {
@@ -9,7 +10,7 @@ class WeatherService {
       url: `${WEATHER.BASE_URL}/${WEATHER.FORECAST}?key=${apiKey}&q=${zipcode}&days=1&aqi=no&alerts=no`,
     };
     const data = (await axios.request(options)).data;
-    return data;
+    return await WeatherHelper.prepareForecast(data);
   }
 
   static async getAstronomy(zipcode, apiKey) {

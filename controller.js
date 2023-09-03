@@ -1,9 +1,13 @@
 //Using this to control the application so we can work with async/await
 require("dotenv").config();
 
+//Services
 const WeatherService = require("./services/weather.service");
 const HolidayService = require("./services/holidays.service");
 const EmailService = require("./services/email.service");
+
+//Helper class to prepare email content
+const { DataHelper } = require("./helpers/helpers");
 
 //weather api constants
 const weatherKey = process.env.WEATHER_API_KEY;
@@ -22,32 +26,31 @@ const controller = async () => {
   const data = {};
 
   try {
-    data.weatherRawData = await WeatherService.getForecast(zipcode, weatherKey);
+    data.weather = await WeatherService.getForecast(zipcode, weatherKey);
+    //console.info(data.weather);
   } catch (err) {
     console.error("Error occurred while fetching weather data:", err.message);
     errors.weather = err.message;
   }
 
   try {
-    data.astroRawData = await WeatherService.getAstronomy(zipcode, weatherKey);
+    data.astro = await WeatherService.getAstronomy(zipcode, weatherKey);
   } catch (err) {
     console.error("Error occurred while fetching astronomy data:", err.message);
     errors.astro = err.message;
   }
 
   try {
-    data.holidayRawData = await HolidayService.getHolidays(holidayKey);
+    data.holidays = await HolidayService.getHolidays(holidayKey);
+    //console.info(data.holiday);
   } catch (err) {
     console.error("Error occurred while fetching holiday data:", err);
     errors.holiday = err.message;
   }
 
-  await EmailService.sendEmail(
-    emailFrom,
-    appPass,
-    emailTo,
-    "<h1>Test Email HTML!</h1>"
-  ); //not handling errors here - this is the final step and is the only thing that absolutely needs to work
+  const emailContent = await DataHelper.prepareContent(data, errors);
+
+  await EmailService.sendEmail(emailFrom, appPass, emailTo, emailContent); //not handling errors here - this is the final step and is the only thing that absolutely needs to work
 };
 
 module.exports = controller;
