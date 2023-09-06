@@ -61,11 +61,20 @@ class DataHelper {
       }
     } else error = true;
 
+    if (!errors.baseball) {
+      if (Object.keys(data.baseball).length) {
+        html += `<h2>Baseball Games</h2>`;
+        Object.keys(data.baseball).forEach((key) => {
+          html += `<div>${data.baseball[key].away} @ ${data.baseball[key].home} : ${data.baseball[key].gameTime}</div>`;
+        });
+      }
+    } else error = true;
+
     if (error) {
       html += "<h2>Errors Today</h2>";
-      if (errors.weather) html += `<div>Weather Error: ${errors.weather}</div>`;
-      if (errors.astro) html += `<div>Astro Error: ${errors.astro}</div>`;
-      if (errors.holiday) html += `<div>Holiday Error: ${errors.holiday}</div>`;
+      Object.entries(obj).forEach(([key, err]) => {
+        html += `<div>${key} error: ${err}</div>`;
+      });
     }
     return html;
   }
