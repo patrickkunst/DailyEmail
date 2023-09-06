@@ -9,6 +9,7 @@ const BaseballService = require("./services/baseball.service");
 
 //Helper class to prepare email content
 const { DataHelper } = require("./helpers/helpers");
+const FootballService = require("./services/football.service");
 
 //weather api constants
 const weatherKey = process.env.WEATHER_API_KEY;
@@ -21,7 +22,8 @@ const holidayKey = process.env.HOLIDAY_API_KEY;
 const appPass = process.env.APP_PASSWORD;
 const emailFrom = process.env.EMAIL_ACCOUNT;
 const emailTo = process.env.EMAIL_TO;
-const team = process.env.TEAM_ID;
+const mlbteam = process.env.MLB_TEAM_ID;
+const nflteam = process.env.NFL_TEAM;
 
 const controller = async () => {
   const errors = {};
@@ -51,10 +53,17 @@ const controller = async () => {
   }
 
   try {
-    data.baseball = await BaseballService.getGames(team);
+    data.baseball = await BaseballService.getGames(mlbteam);
   } catch (err) {
     console.error("Error occurred while fetching mlb games:", err.message);
     errors.baseball = err.message;
+  }
+
+  try {
+    data.football = await FootballService.getGame(nflteam);
+  } catch (err) {
+    console.error("Error occurred while fetching NFL game:", err.message);
+    errors.football = err.message;
   }
 
   const emailContent = await DataHelper.prepareContent(data, errors);
