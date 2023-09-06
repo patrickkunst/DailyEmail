@@ -5,6 +5,7 @@ require("dotenv").config();
 const WeatherService = require("./services/weather.service");
 const HolidayService = require("./services/holidays.service");
 const EmailService = require("./services/email.service");
+const BaseballService = require("./services/baseball.service");
 
 //Helper class to prepare email content
 const { DataHelper } = require("./helpers/helpers");
@@ -20,6 +21,7 @@ const holidayKey = process.env.HOLIDAY_API_KEY;
 const appPass = process.env.APP_PASSWORD;
 const emailFrom = process.env.EMAIL_ACCOUNT;
 const emailTo = process.env.EMAIL_TO;
+const team = process.env.TEAM_ID;
 
 const controller = async () => {
   const errors = {};
@@ -44,11 +46,20 @@ const controller = async () => {
     data.holidays = await HolidayService.getHolidays(holidayKey);
     //console.info(data.holiday);
   } catch (err) {
-    console.error("Error occurred while fetching holiday data:", err);
+    console.error("Error occurred while fetching holiday data:", err.message);
     errors.holiday = err.message;
   }
 
+  try {
+    data.baseball = await BaseballService.getGames(team);
+  } catch (err) {
+    console.error("Error occurred while fetching mlb games:", err.message);
+    errors.baseball = err.message;
+  }
+
   const emailContent = await DataHelper.prepareContent(data, errors);
+
+  console.log(emailContent);
 
   await EmailService.sendEmail(emailFrom, appPass, emailTo, emailContent); //not handling errors here - this is the final step and is the only thing that absolutely needs to work
 };

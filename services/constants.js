@@ -8,6 +8,9 @@ const CONSTANTS = {
   HOLIDAY: {
     BASE_URL: "https://calendarific.com/api/v2/holidays",
   },
+  BASEBALL: {
+    BASE_URL: "https://statsapi.mlb.com/api/v1",
+  },
 };
 
 module.exports = CONSTANTS;
