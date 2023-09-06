@@ -72,7 +72,7 @@ class DataHelper {
 
     if (error) {
       html += "<h2>Errors Today</h2>";
-      Object.entries(obj).forEach(([key, err]) => {
+      Object.entries(errors).forEach(([key, err]) => {
         html += `<div>${key} error: ${err}</div>`;
       });
     }
