@@ -70,6 +70,13 @@ class DataHelper {
       }
     } else error = true;
 
+    if (!errors.football) {
+      if (data.football) {
+        html += `<h2>Football</h2>
+        <div>${data.football.name}: ${data.football.time}</div>`;
+      }
+    } else error = true;
+
     if (error) {
       html += "<h2>Errors Today</h2>";
       Object.entries(errors).forEach(([key, err]) => {

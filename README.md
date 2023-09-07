@@ -14,8 +14,9 @@ Daily Email is a repo for scraping relevant information for the day and sending 
 - WeatherAPI.com
 - Calendarific
 - MLB Gameday API
+- ESPN Site API
 
 # Future Features
 
-- FetchingNFL, NBA gameday information for the day
+- Fetching NBA gameday information for the day
 - Extending the MLB game service to fetch data for multiple teams

@@ -11,6 +11,9 @@ const CONSTANTS = {
   BASEBALL: {
     BASE_URL: "https://statsapi.mlb.com/api/v1",
   },
+  FOOTBALL: {
+    BASE_URL: "https://site.api.espn.com/apis/site/v2/sports/football/nfl",
+  },
 };
 
 module.exports = CONSTANTS;
