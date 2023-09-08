@@ -11,7 +11,7 @@ class WeatherService {
     };
     try {
       const weather = (await axios.request(options)).data;
-      data.weather = await WeatherHelper.prepareForecast(weather);
+      data.weather = WeatherHelper.prepareForecast(weather);
     } catch (err) {
       errors.weather = err.message;
     }

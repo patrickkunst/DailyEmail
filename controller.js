@@ -28,7 +28,6 @@ const nflteam = process.env.NFL_TEAM;
 const controller = async () => {
   const errors = {};
   const data = {};
-
   await Promise.allSettled([
     WeatherService.getForecast(zipcode, weatherKey, data, errors),
     WeatherService.getAstronomy(zipcode, weatherKey, data, errors),

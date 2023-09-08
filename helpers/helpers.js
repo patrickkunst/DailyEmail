@@ -2,7 +2,7 @@ const moment = require("moment");
 
 class WeatherHelper {
   //reformat the object so that any changes to the api format response only need to be changed here
-  static async prepareForecast(data) {
+  static prepareForecast(data) {
     const forecastData = {
       current: data.current.temp_f,
       min: data.forecast.forecastday[0].day.mintemp_f,
@@ -17,7 +17,7 @@ class WeatherHelper {
 
 class HolidayHelper {
   //this helper isn't completely necessary, but adding it just in case it's needed down the line
-  static async prepareHolidays(data) {
+  static prepareHolidays(data) {
     const holidays = [];
     for (let holiday of data) {
       holidays.push({
@@ -30,7 +30,7 @@ class HolidayHelper {
 }
 
 class DataHelper {
-  static async prepareContent(data, errors) {
+  static prepareContent(data, errors) {
     let html = `<h1>Daily Digest for ${moment().format("MM-DD-YYYY")}</h1>`;
     let error = false;
     if (!errors.weather) {

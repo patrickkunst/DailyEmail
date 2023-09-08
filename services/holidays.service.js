@@ -14,9 +14,7 @@ class HolidayService {
     };
     try {
       const holidays = (await axios.request(options)).data;
-      data.holidays = await HolidayHelper.prepareHolidays(
-        holidays.response.holidays
-      );
+      data.holidays = HolidayHelper.prepareHolidays(holidays.response.holidays);
     } catch (err) {
       errors.holiday = err.message;
     }
