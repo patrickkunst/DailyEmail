@@ -30,7 +30,7 @@ class HolidayHelper {
 }
 
 class DataHelper {
-  static prepareContent(data, errors) {
+  static async prepareContent(data, errors) {
     let html = `<h1>Daily Digest for ${moment().format("MM-DD-YYYY")}</h1>`;
     let error = false;
     if (!errors.weather) {
