@@ -29,42 +29,13 @@ const controller = async () => {
   const errors = {};
   const data = {};
 
-  try {
-    data.weather = await WeatherService.getForecast(zipcode, weatherKey);
-    //console.info(data.weather);
-  } catch (err) {
-    console.error("Error occurred while fetching weather data:", err.message);
-    errors.weather = err.message;
-  }
-
-  try {
-    data.astro = await WeatherService.getAstronomy(zipcode, weatherKey);
-  } catch (err) {
-    console.error("Error occurred while fetching astronomy data:", err.message);
-    errors.astro = err.message;
-  }
-
-  try {
-    data.holidays = await HolidayService.getHolidays(holidayKey);
-    //console.info(data.holiday);
-  } catch (err) {
-    console.error("Error occurred while fetching holiday data:", err.message);
-    errors.holiday = err.message;
-  }
-
-  try {
-    data.baseball = await BaseballService.getGames(mlbteam);
-  } catch (err) {
-    console.error("Error occurred while fetching mlb games:", err.message);
-    errors.baseball = err.message;
-  }
-
-  try {
-    data.football = await FootballService.getGame(nflteam);
-  } catch (err) {
-    console.error("Error occurred while fetching NFL game:", err.message);
-    errors.football = err.message;
-  }
+  await Promise.allSettled([
+    WeatherService.getForecast(zipcode, weatherKey, data, errors),
+    WeatherService.getAstronomy(zipcode, weatherKey, data, errors),
+    HolidayService.getHolidays(holidayKey, data, errors),
+    BaseballService.getGames(mlbteam, data, errors),
+    FootballService.getGame(nflteam, data, errors),
+  ]);
 
   const emailContent = await DataHelper.prepareContent(data, errors);
 
