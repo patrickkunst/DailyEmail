@@ -4,7 +4,7 @@ const { HOLIDAY } = require("./constants");
 const { HolidayHelper } = require("../helpers/helpers");
 
 class HolidayService {
-  static async getHolidays(apiKey) {
+  static async getHolidays(apiKey, data, errors) {
     const day = moment().date();
     const month = moment().month() + 1;
     const year = moment().year();
@@ -12,9 +12,14 @@ class HolidayService {
       method: "get",
       url: `${HOLIDAY.BASE_URL}?&api_key=${apiKey}&country=US&year=${year}&day=${day}&month=${month}`,
     };
-
-    const data = (await axios.request(options)).data;
-    return await HolidayHelper.prepareHolidays(data.response.holidays);
+    try {
+      const holidays = (await axios.request(options)).data;
+      data.holidays = await HolidayHelper.prepareHolidays(
+        holidays.response.holidays
+      );
+    } catch (err) {
+      errors.holiday = err.message;
+    }
   }
 }
 
