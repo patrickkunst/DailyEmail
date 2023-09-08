@@ -5,9 +5,10 @@ const moment = require("moment-timezone");
 class BaseballService {
   static async getGames(teamId) {
     const games = {};
+    const today = moment().format("YYYY-MM-DD");
     const options = {
       method: "get",
-      url: `${BASEBALL.BASE_URL}/schedule?sportId=1`,
+      url: `${BASEBALL.BASE_URL}/schedule?sportId=1&startDate=${today}&endDate=${today}`,
     };
 
     const data = (await axios.request(options)).data.dates[0].games;
