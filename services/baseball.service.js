@@ -5,7 +5,7 @@ const moment = require("moment-timezone");
 class BaseballService {
   static async getGames(teamId, data, errors) {
     const games = {};
-    const today = moment().tz("America/Chicago").format("YYYY-MM-DD");
+    const today = moment().tz().format("YYYY-MM-DD");
     const options = {
       method: "get",
       url: `${BASEBALL.BASE_URL}/schedule?sportId=1&startDate=${today}&endDate=${today}`,
@@ -28,6 +28,11 @@ class BaseballService {
           game.teams.away.team.id == teamId ||
           game.teams.home.team.id == teamId
         ) {
+          console.info({
+            service: "BaseballService",
+            message: "Found a matching game!",
+          });
+
           games[game.gamePk] = {
             gameTime: moment
               .utc(game.gameDate)
@@ -38,6 +43,11 @@ class BaseballService {
           };
         }
       }
+      console.info({
+        service: "BaseballService",
+        games: games,
+      });
+
       data.baseball = games;
     } catch (err) {
       errors.baseball = err.message;
