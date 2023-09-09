@@ -5,7 +5,7 @@ const moment = require("moment-timezone");
 class BaseballService {
   static async getGames(teamId, data, errors) {
     const games = {};
-    const today = moment().tz().format("YYYY-MM-DD");
+    const today = moment().tz("America/Chicago").format("YYYY-MM-DD");
     const options = {
       method: "get",
       url: `${BASEBALL.BASE_URL}/schedule?sportId=1&startDate=${today}&endDate=${today}`,
