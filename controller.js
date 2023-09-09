@@ -38,7 +38,7 @@ const controller = async () => {
 
   const emailContent = await DataHelper.prepareContent(data, errors);
 
-  await EmailService.sendEmail(emailFrom, appPass, emailTo, emailContent); //not handling errors here - this is the final step and is the only thing that absolutely needs to work
+  await EmailService.sendEmail(emailFrom, appPass, emailTo, emailContent);
 };
 
 module.exports = controller;

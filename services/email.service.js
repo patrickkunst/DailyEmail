@@ -17,10 +17,19 @@ class EmailService {
       subject: `Daily Email Digest: ${moment().format("MMM D")}`,
       html: data,
     };
+    console.info({
+      service: "EmailService",
+      message: "Sending Email",
+      email: emailTo,
+    });
 
     transporter.sendMail(options, (err, info) => {
-      if (err) console.error(err);
-      else console.info(info);
+      if (err)
+        console.error({
+          service: "EmailService",
+          error: err.message,
+        });
+      else console.info("DailyEmail sent!");
     });
   }
 }

@@ -8,8 +8,19 @@ class FootballService {
       method: "get",
       url: `${FOOTBALL.BASE_URL}/scoreboard`,
     };
+    console.info({
+      service: "FootballService",
+      message: "Sending Football API request",
+      request: options,
+    });
+
     try {
       const games = (await axios.request(options)).data.events;
+      console.info({
+        service: "FootballService",
+        message: "API Response received",
+      });
+
       for (let game of games) {
         if (
           game.competitions[0].competitors[0].team.id == team ||
@@ -27,6 +38,10 @@ class FootballService {
       }
     } catch (err) {
       errors.football = err.message;
+      console.error({
+        service: "FootballService",
+        error: err.message,
+      });
     }
   }
 }
