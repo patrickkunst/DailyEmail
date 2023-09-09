@@ -27,7 +27,7 @@ class FootballService {
           game.competitions[0].competitors[1].team.id == team
         ) {
           const gameTime = moment(game.date).tz("America/Chicago");
-          if (gameTime.isSame(moment(), "day")) {
+          if (gameTime.isSame(moment().tz("America/Chicago"), "day")) {
             const footballGame = {
               time: gameTime.format("h:MM A"),
               name: game.name,
