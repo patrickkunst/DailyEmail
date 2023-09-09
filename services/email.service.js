@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const moment = require("moment");
+const moment = require("moment-timezone");
 
 class EmailService {
   static async sendEmail(emailFrom, password, emailTo, data) {
@@ -14,7 +14,9 @@ class EmailService {
     const options = {
       from: emailFrom,
       to: emailTo,
-      subject: `Daily Email Digest: ${moment().format("MMM D")}`,
+      subject: `Daily Email Digest: ${moment()
+        .tz("America/Chicago")
+        .format("MMM D")}`,
       html: data,
     };
     console.info({
