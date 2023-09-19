@@ -22,10 +22,6 @@ class FootballService {
       });
 
       for (let game of games) {
-        console.info({
-          service: "FootballService",
-          game: game,
-        });
         if (
           game.competitions[0].competitors[0].team.id == team ||
           game.competitions[0].competitors[1].team.id == team
