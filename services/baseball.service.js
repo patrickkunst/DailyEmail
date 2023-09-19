@@ -24,6 +24,10 @@ class BaseballService {
       });
 
       for (let game of gameRawData) {
+        console.info({
+          service: "BaseballService",
+          game: game,
+        });
         if (
           game.teams.away.team.id == teamId ||
           game.teams.home.team.id == teamId
