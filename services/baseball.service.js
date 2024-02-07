@@ -26,7 +26,10 @@ class BaseballService {
         service: "BaseballService",
         message: "API Response received",
       });
-
+      if (!gameRawData) {
+        data.baseball = {};
+        return;
+      }
       for (let game of gameRawData) {
         if (
           game?.teams?.away?.team?.id == teamId ||
