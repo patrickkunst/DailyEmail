@@ -19,11 +19,14 @@ class HolidayHelper {
   //this helper isn't completely necessary, but adding it just in case it's needed down the line
   static prepareHolidays(data) {
     const holidays = [];
+    const seen = new Set();
     for (let holiday of data) {
+      if (seen.has(holiday.name)) continue;
       holidays.push({
         name: holiday.name,
         description: holiday.description,
       });
+      seen.add(holiday.name);
     }
     return holidays;
   }

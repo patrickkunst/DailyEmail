@@ -17,7 +17,11 @@ class BaseballService {
     });
 
     try {
-      const gameRawData = (await axios.request(options)).data.dates[0].games;
+      const gameRawData = (await axios.request(options)).data.dates[0]?.games;
+      if (!gameRawData) {
+        data.baseball = games;
+        return;
+      }
       console.info({
         service: "BaseballService",
         message: "API Response received",
@@ -25,8 +29,8 @@ class BaseballService {
 
       for (let game of gameRawData) {
         if (
-          game.teams.away.team.id == teamId ||
-          game.teams.home.team.id == teamId
+          game?.teams?.away?.team?.id == teamId ||
+          game?.teams?.home?.team?.id == teamId
         ) {
           console.info({
             service: "BaseballService",
